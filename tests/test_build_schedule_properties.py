@@ -29,3 +29,6 @@ def test_dates_within_range():
 def test_dates_from_all_crontabs():
     assert set(d.minute for d in build_schedule(START, END, C1, C2, C3)) == {1, 2, 3}
 
+
+def test_not_contain_duplicate_dates():
+    assert len(list(build_schedule(START, END, C1))) == len(list(build_schedule(START, END, C1, C1)))
