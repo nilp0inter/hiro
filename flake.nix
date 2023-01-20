@@ -14,7 +14,7 @@
           name = "hiro";
           version = "0.0.1";
           src = ./.;
-          buildInputs = [ croniter cytoolz ];
+          propagatedBuildInputs = [ croniter cytoolz ];
           checkInputs = [ pytest hypothesis ];
           checkPhase = ''python -m pytest'';
         });

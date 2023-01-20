@@ -9,3 +9,7 @@ def build_schedule(start, end, *crontabs):
         if d > end:
             return
         yield d
+
+
+def main():
+    print("Hi!")
