@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from itertools import cycle
 from random import randint
 import argparse
 import sys
@@ -41,8 +42,9 @@ def main():
     before = min(args.before)
 
     it = build_schedule(after, before, *args.schedule)
+
     if args.skip_random is not None:
-        it = drop(randint(0, args.skip_random), it)
+        it = drop(randint(0, args.skip_random), cycle(it))
 
     for d in it:
         d = d.replace(second=randint(0, 59)) if args.random_seconds else d
