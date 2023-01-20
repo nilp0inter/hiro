@@ -23,9 +23,9 @@ def valid_crontab(expr):
 
 def build_parser(default_before):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--schedule", type=valid_crontab, action="append", required=True, help="schedule in crontab format")
-    parser.add_argument("--after", type=datetime.fromisoformat, action="append", required=True, help="minimum date, can be provided several times, the greater will be selected")
-    parser.add_argument("--before", type=datetime.fromisoformat, default=[default_before], action="append", required=False, help="maximum date, can be provided several times, the lesser will be selected")
+    parser.add_argument("-s", "--schedule", type=valid_crontab, action="append", required=True, help="schedule in crontab format")
+    parser.add_argument("-A", "--after", type=datetime.fromisoformat, action="append", required=True, help="minimum date, can be provided several times, the greater will be selected")
+    parser.add_argument("-B", "--before", type=datetime.fromisoformat, default=[default_before], action="append", required=False, help="maximum date, can be provided several times, the lesser will be selected")
     parser.add_argument("-r", "--random-seconds", action="store_true", help="randomize seconds")
     parser.add_argument("-R", "--skip-random", default=None, type=int, help="skip random event with a max")
     return parser
