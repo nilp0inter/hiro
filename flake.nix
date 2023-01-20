@@ -16,6 +16,7 @@
           src = ./.;
           buildInputs = [ croniter cytoolz ];
           checkInputs = [ pytest hypothesis ];
+          checkPhase = ''python -m pytest'';
         });
         packages.default = pkgs.python3Packages.callPackage hiro {};
         devShell = pkgs.mkShell {
