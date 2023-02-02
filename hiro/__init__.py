@@ -1,9 +1,8 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from itertools import cycle
 from random import randint
 import argparse
 import sys
-import time
 
 from croniter import croniter
 from cytoolz.itertoolz import merge_sorted, unique, drop
