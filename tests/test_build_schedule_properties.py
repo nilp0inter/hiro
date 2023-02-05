@@ -1,8 +1,5 @@
 from datetime import datetime
 
-import pytest
-import hypothesis
-
 from hiro import build_schedule
 
 
