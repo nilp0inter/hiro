@@ -10,12 +10,12 @@
         pkgs = import nixpkgs { inherit system; };
       in
       rec {
-        hiro = ({ buildPythonPackage, croniter, cytoolz, pytest, hypothesis }: buildPythonPackage {
+        hiro = ({ buildPythonPackage, croniter, cytoolz, pytest }: buildPythonPackage {
           name = "hiro";
           version = "0.0.1";
           src = ./.;
           propagatedBuildInputs = [ croniter cytoolz ];
-          checkInputs = [ pytest hypothesis ];
+          checkInputs = [ pytest ];
           checkPhase = ''python -m pytest'';
         });
 
@@ -32,7 +32,6 @@
               croniter
               cytoolz
               pytest
-              hypothesis
             ]))
           ];
         };
