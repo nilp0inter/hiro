@@ -9,6 +9,10 @@ from cytoolz.itertoolz import merge_sorted, unique, drop
 
 
 def build_schedule(start, end, *crontabs):
+    """
+    Produce a sorted list of datetime objects for the next available event.
+
+    """
     for d in unique(merge_sorted(*(croniter(c, start, ret_type=datetime) for c in crontabs))):
         if d > end:
             return
@@ -16,12 +20,21 @@ def build_schedule(start, end, *crontabs):
 
 
 def valid_crontab(expr):
+    """
+    Validate a crontab expression.
+
+    Note: This function is used as a type for argparse
+    """
     if not croniter.is_valid(expr):
         raise ValueError("Invalid expression {expr!r}")
     return expr
 
 
 def build_parser(default_before):
+    """
+    Build a parser for the command line interface.
+
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--schedule", type=valid_crontab, action="append", required=True, help="schedule in crontab format")
     parser.add_argument("-A", "--after", type=datetime.fromisoformat, action="append", required=True, help="minimum date, can be provided several times, the greater will be selected")
@@ -32,6 +45,10 @@ def build_parser(default_before):
 
 
 def main():
+    """
+    Parse command line arguments and print the next available event.
+
+    """
     now = datetime.now(tz=datetime.now().astimezone().tzinfo)
 
     parser = build_parser(now)
