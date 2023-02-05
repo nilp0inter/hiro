@@ -3,6 +3,7 @@ from datetime import datetime
 from hiro import build_schedule
 
 
+C0 = "0 * * * *"
 C1 = "1 * * * *"
 C2 = "2 * * * *"
 C3 = "3 * * * *"
@@ -21,6 +22,13 @@ def test_dates_generated():
 def test_dates_within_range():
     for d in build_schedule(START, END, C1):
         assert END >= d >= START
+
+
+def test_last_date():
+    for d in build_schedule(START, END, C0):
+        if d == END:
+            return
+    assert False
 
 
 def test_dates_from_all_crontabs():
