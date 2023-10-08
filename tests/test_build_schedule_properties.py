@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from hiro import build_schedule
+from hiro.slot import build_schedule
 
 
 C0 = "0 * * * *"
