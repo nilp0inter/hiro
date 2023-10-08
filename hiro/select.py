@@ -1,6 +1,7 @@
 import argparse
 import curses
 import datetime
+import os
 import subprocess
 import sys
 import time
@@ -92,10 +93,9 @@ def cmain(screen, initial_timestamp):
         elif key == ord('k'):
             timestamp -= datetime.timedelta(minutes=1)
         elif key == 10:  # Enter key
-            print(timestamp.strftime('%Y-%m-%d %H:%M:%S%z'))
-            sys.exit(0)
+            return timestamp.strftime('%Y-%m-%d %H:%M:%S%z')
         elif key == ord('q'):
-            sys.exit(1)
+            return None
 
 def main():
     parser = argparse.ArgumentParser(description="Timestamp Editor with Vim-like Controls.")
@@ -106,4 +106,17 @@ def main():
                         help="Timestamp in format '2023-10-16 08:21:32+02:00'")
     args = parser.parse_args()
 
-    curses.wrapper(cmain, args.timestamp)
+    # Save original stdout file descriptor and redirect stdout to stderr
+    original_stdout_fd = os.dup(1)
+    os.dup2(2, 1)
+
+    try:
+        output = curses.wrapper(cmain, args.timestamp)
+    finally:
+        # Restore original stdout
+        os.dup2(original_stdout_fd, 1)
+        os.close(original_stdout_fd)
+
+    if output is not None:
+        print(output)
+
