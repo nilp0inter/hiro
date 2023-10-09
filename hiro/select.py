@@ -3,7 +3,6 @@ import curses
 import datetime
 import os
 import subprocess
-import sys
 import time
 
 def get_cal_output(timestamp):
@@ -14,7 +13,8 @@ def get_cal_output(timestamp):
     output = result.stdout.decode('utf-8')
     
     # Replace ANSI escape sequences with custom placeholders
-    output = output.replace(" \x1b[7m", "⟦").replace("\x1b[27m ", "⟧")
+    output = output.replace(" \x1b[7m", "⟦").replace("\x1b[0m ", "⟧")
+
     
     return output
 
