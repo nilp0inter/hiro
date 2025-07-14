@@ -14,6 +14,7 @@
           name = "hiro";
           version = "0.0.1";
           src = ./.;
+          pyproject = false;
           propagatedBuildInputs = [ croniter cytoolz ];
           checkInputs = [ pytest ];
           checkPhase = ''python -m pytest'';
