@@ -10,11 +10,12 @@
         pkgs = import nixpkgs { inherit system; };
       in
       rec {
-        hiro = ({ buildPythonPackage, croniter, cytoolz, pytest }: buildPythonPackage {
+        hiro = ({ buildPythonPackage, croniter, cytoolz, pytest, setuptools }: buildPythonPackage {
           name = "hiro";
           version = "0.0.1";
           src = ./.;
-          pyproject = false;
+          pyproject = true;
+          build-system = [ setuptools ];
           propagatedBuildInputs = [ croniter cytoolz ];
           checkInputs = [ pytest ];
           checkPhase = ''python -m pytest'';
@@ -22,7 +23,7 @@
 
         packages.hiro-package = pkgs.python3Packages.callPackage hiro {};
         packages.hiro = pkgs.python3Packages.toPythonApplication packages.hiro-package;
-        packages.default = packages.hiro-package;
+        packages.default = packages.hiro;
 
         apps.hiro = flake-utils.lib.mkApp { drv = packages.hiro; };
         apps.default = apps.hiro;
